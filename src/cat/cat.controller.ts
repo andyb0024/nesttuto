@@ -1,16 +1,28 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Cat } from './../model/cat.model';
+import { CatService } from './cat.service';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 
 @Controller('cat')
 export class CatController {
+  constructor(private catService:CatService){
+
+  }
   @Get()
-  findAll(): string {
+  getAllCat():Cat[] {
     // console.log()
-    return 'This action returns all cats';
+    return this.catService.getAllCat();
+   
   }
 
 
-  @Post()
-  create():string{
-    return 'This action adds a new cat'
+  // @Post()
+  // create(@Body() cat:Cat):any{
+  //   return this.catService.createCat(cat)
+  // }
+
+  @Post('/create')
+  createCat(@Body() cat:Cat){
+    return this.catService.createCat(cat)
+
   }
 }
